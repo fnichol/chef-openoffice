@@ -17,4 +17,6 @@
 # limitations under the License.
 #
 
-package "openoffice.org-headless"
+%w{ openoffice.org-core openoffice.org-headless }.each do |pkg|
+  package pkg
+end
