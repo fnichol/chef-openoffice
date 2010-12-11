@@ -17,6 +17,6 @@
 # limitations under the License.
 #
 
-%w{ openoffice.org-core openoffice.org-headless }.each do |pkg|
+%w{ openoffice.org-core }.each do |pkg|
   package pkg
 end
