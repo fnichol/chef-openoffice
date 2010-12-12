@@ -17,6 +17,8 @@
 # limitations under the License.
 #
 
-%w{ openoffice.org-core }.each do |pkg|
+include_recipe "java"
+
+%w{ openoffice.org-core openoffice.org-java-common }.each do |pkg|
   package pkg
 end
