@@ -1,8 +1,8 @@
 #
 # Cookbook Name:: openoffice
-# Recipe:: apps
+# Attributes:: apps
 #
-# Copyright 2011, Fletcher Nichol
+# Copyright 2010, Fletcher Nichol
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -17,8 +17,10 @@
 # limitations under the License.
 #
 
-include_recipe "java"
-
-Array(node['openoffice']['apps_pkgs']).each do |pkg|
-  package pkg
+case platform
+when "ubuntu"
+  node.set['openoffice']['apps_pkgs'] =
+    %w{openoffice.org-writer openoffice.org-calc openoffice.org-impress}
+else
+  node.set['openoffice']['apps_pkgs'] = []
 end
