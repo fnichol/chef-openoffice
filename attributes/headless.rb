@@ -19,8 +19,13 @@
 
 case platform
 when "ubuntu"
-  node.set['openoffice']['headless_pkgs'] =
-    %w{openoffice.org-core openoffice.org-java-common}
+  if node['platform_version'] <= Gem::Version.new("10.04")
+    node.set['openoffice']['headless_pkgs'] =
+      %w{openoffice.org-core openoffice.org-java-common}
+  else
+    node.set['openoffice']['headless_pkgs'] =
+      %w{libreoffice-core libreoffice-java-common}
+  end
 else
   node.set['openoffice']['headless_pkgs'] = []
 end

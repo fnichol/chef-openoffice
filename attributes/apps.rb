@@ -19,8 +19,13 @@
 
 case platform
 when "ubuntu"
-  node.set['openoffice']['apps_pkgs'] =
-    %w{openoffice.org-writer openoffice.org-calc openoffice.org-impress}
+  if node['platform_version'] <= Gem::Version.new("10.04")
+    node.set['openoffice']['apps_pkgs'] =
+      %w{openoffice.org-writer openoffice.org-calc openoffice.org-impress}
+  else
+    node.set['openoffice']['apps_pkgs'] =
+      %w{libreoffice-writer libreoffice-calc libreoffice-impress}
+  end
 else
   node.set['openoffice']['apps_pkgs'] = []
 end
