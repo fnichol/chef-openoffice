@@ -13,3 +13,4 @@ recipe "openoffice::apps",      "Installs the application components for OpenOff
 supports "ubuntu"
 
 depends "java"
+depends 'tar'
