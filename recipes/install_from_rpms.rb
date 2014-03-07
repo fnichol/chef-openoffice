@@ -1,6 +1,6 @@
 #
 # Cookbook Name:: openoffice
-# Recipe:: default
+# Recipe:: install_from_rpms
 #
 # Copyright 2010, Fletcher Nichol
 #
@@ -17,11 +17,17 @@
 # limitations under the License.
 #
 
-case node[:openoffice][:install_method]
+directory '/tmp/openoffice'
 
-  when 'package'
-    include_recipe "#{cookbook_name}::apps"
-  when 'rpms'
-    include_recipe "#{cookbook_name}::install_from_rpms"
-
+unless File.directory?('/tmp/openoffice/en-US/RPMS')
+  tar_extract node[:openoffice][:source][:url] do
+    target_dir '/tmp/openoffice'
+  end
 end
+
+execute 'install-openoffice-rpms' do
+  command 'yum install -y /tmp/openoffice/en-US/RPMS/*.rpm /tmp/openoffice/en-US/RPMS/desktop-integration/openoffice4.0-redhat-*.rpm'
+  #TODO: better way to prevent installation - if we uninstall we want to reinstall.
+  not_if 'rpm -q openoffice'
+end
+
