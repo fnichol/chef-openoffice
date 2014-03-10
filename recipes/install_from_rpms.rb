@@ -27,7 +27,6 @@ end
 
 execute 'install-openoffice-rpms' do
   command 'yum install -y /tmp/openoffice/en-US/RPMS/*.rpm /tmp/openoffice/en-US/RPMS/desktop-integration/openoffice4.0-redhat-*.rpm'
-  #TODO: better way to prevent installation - if we uninstall we want to reinstall.
   not_if 'rpm -q openoffice'
 end
 
