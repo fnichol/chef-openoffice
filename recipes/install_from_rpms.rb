@@ -17,16 +17,18 @@
 # limitations under the License.
 #
 
-directory '/tmp/openoffice'
+directory '/var/chef/cache/openoffice' do
+  recursive true
+end
 
-unless File.directory?('/tmp/openoffice/en-US/RPMS')
-  tar_extract node[:openoffice][:source][:url] do
-    target_dir '/tmp/openoffice'
+unless File.directory?('/var/chef/cache/openoffice/en-US/RPMS')
+  tar_extract node[:openoffice][:rpm_url] do
+    target_dir '/var/chef/cache/openoffice'
   end
 end
 
 execute 'install-openoffice-rpms' do
-  command 'yum install -y /tmp/openoffice/en-US/RPMS/*.rpm /tmp/openoffice/en-US/RPMS/desktop-integration/openoffice4.0-redhat-*.rpm'
+  command 'yum install -y /var/chef/cache/openoffice/en-US/RPMS/*.rpm /var/chef/cache/openoffice/en-US/RPMS/desktop-integration/openoffice4.0-redhat-*.rpm'
   not_if 'rpm -q openoffice'
 end
 
