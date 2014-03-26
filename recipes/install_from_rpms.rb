@@ -2,7 +2,7 @@
 # Cookbook Name:: openoffice
 # Recipe:: install_from_rpms
 #
-# Copyright 2010, Fletcher Nichol
+# Copyright 2014, Eric Tucker
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -21,10 +21,15 @@ directory '/var/chef/cache/openoffice' do
   recursive true
 end
 
-unless File.directory?('/var/chef/cache/openoffice/en-US/RPMS')
-  tar_extract node[:openoffice][:rpm_url] do
-    target_dir '/var/chef/cache/openoffice'
-  end
+#Can't use remote_file due to redirect limits on the resource that can't be overridden
+execute 'download-openoffice-tar' do
+  command 'wget ' + node[:openoffice][:rpm_url] + ' -O /var/chef/cache/openoffice/Apache_OpenOffice_RPM-US.tar.gz'
+  not_if 'ls /var/chef/cache/openoffice/Apache_OpenOffice_RPM-US.tar.gz &>/dev/null'
+end
+
+execute 'extract-openoffice-tar' do
+  command 'tar xf /var/chef/cache/openoffice/Apache_OpenOffice_RPM-US.tar.gz -C /var/chef/cache/openoffice'
+  not_if 'ls /var/chef/cache/openoffice/en-US &>/dev/null'
 end
 
 execute 'install-openoffice-rpms' do
