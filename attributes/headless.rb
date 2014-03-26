@@ -17,15 +17,15 @@
 # limitations under the License.
 #
 
-case platform
+case node['platform']
 when "ubuntu"
   if node['platform_version'].to_f <= 10.04
-    node.set['openoffice']['headless_pkgs'] =
+    default['openoffice']['headless_pkgs'] =
       %w{openoffice.org-core openoffice.org-java-common}
   else
-    node.set['openoffice']['headless_pkgs'] =
+    default['openoffice']['headless_pkgs'] =
       %w{libreoffice-core libreoffice-java-common}
   end
 else
-  node.set['openoffice']['headless_pkgs'] = []
+  default['openoffice']['headless_pkgs'] = []
 end
