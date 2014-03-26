@@ -16,18 +16,17 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-directory '/var/chef/cache/openoffice' do
+
+directory "#{Chef::Config[:file_cache_path]}/openoffice" do
   recursive true
 end
 
-unless File.directory?('/var/chef/cache/openoffice/en-US')
-  tar_extract node[:openoffice][:rpm_url] do
-    target_dir '/var/chef/cache/openoffice'
-  end
+tar_extract node['openoffice']['rpm_url'] do
+  target_dir "#{Chef::Config[:file_cache_path]}/openoffice"
+  not_if { File.directory?("#{Chef::Config[:file_cache_path]}/openoffice/en-US") }
 end
 
 execute 'install-openoffice-rpms' do
-  command 'yum install -y /var/chef/cache/openoffice/en-US/RPMS/*.rpm /var/chef/cache/openoffice/en-US/RPMS/desktop-integration/openoffice4.0-redhat-*.rpm'
+  command "yum install -y #{Chef::Config[:file_cache_path]}/openoffice/en-US/RPMS/*.rpm /var/chef/cache/openoffice/en-US/RPMS/desktop-integration/openoffice4.0-redhat-*.rpm'
   not_if 'rpm -q openoffice'
 end
-

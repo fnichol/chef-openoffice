@@ -17,7 +17,7 @@
 # limitations under the License.
 #
 
-case node[:openoffice][:install_method]
+case node['openoffice']['install_method']
 
   when 'package'
     include_recipe "#{cookbook_name}::apps"
