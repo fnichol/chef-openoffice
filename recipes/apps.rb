@@ -17,8 +17,8 @@
 # limitations under the License.
 #
 
-include_recipe "java"
+include_recipe 'java'
 
-Array(node['openoffice']['apps_pkgs']).each do |pkg|
+node['openoffice']['apps_pkgs'].each do |pkg|
   package pkg
 end
