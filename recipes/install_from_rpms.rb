@@ -1,8 +1,8 @@
 #
 # Cookbook Name:: openoffice
-# Recipe:: default
+# Recipe:: install_from_rpms
 #
-# Copyright 2010, Fletcher Nichol
+# Copyright 2014, Eric Tucker
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -16,12 +16,18 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-
-case node[:openoffice][:install_method]
-
-  when 'package'
-    include_recipe "#{cookbook_name}::apps"
-  when 'rpms'
-    include_recipe "#{cookbook_name}::install_from_rpms"
-
+directory '/var/chef/cache/openoffice' do
+  recursive true
 end
+
+unless File.directory?('/var/chef/cache/openoffice/en-US')
+  tar_extract node[:openoffice][:rpm_url] do
+    target_dir '/var/chef/cache/openoffice'
+  end
+end
+
+execute 'install-openoffice-rpms' do
+  command 'yum install -y /var/chef/cache/openoffice/en-US/RPMS/*.rpm /var/chef/cache/openoffice/en-US/RPMS/desktop-integration/openoffice4.0-redhat-*.rpm'
+  not_if 'rpm -q openoffice'
+end
+
