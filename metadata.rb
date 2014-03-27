@@ -10,7 +10,9 @@ recipe "openoffice",            "Default, empty recipe"
 recipe "openoffice::headless",  "Installs the headless (no X) core of OpenOffice."
 recipe "openoffice::apps",      "Installs the application components for OpenOffice, namely Writer, Calc, and Impress."
 
-supports "ubuntu"
+%w{fedora centos rhel ubuntu}.each do |os|
+	supports os
+end
 
 depends "java"
 depends 'tar'

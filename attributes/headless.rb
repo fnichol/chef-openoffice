@@ -27,5 +27,5 @@ when "ubuntu"
       %w{libreoffice-core libreoffice-java-common}
   end
 else
-  default['openoffice']['headless_pkgs'] = []
+  default['openoffice']['headless_pkgs'] = %w{libreoffice-headless}
 end
