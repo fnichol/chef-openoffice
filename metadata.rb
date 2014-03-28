@@ -15,4 +15,5 @@ recipe "openoffice::apps",      "Installs the application components for OpenOff
 end
 
 depends "java"
+depends "tar"
 
