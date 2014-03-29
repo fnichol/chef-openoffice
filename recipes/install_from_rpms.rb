@@ -27,6 +27,6 @@ tar_extract node['openoffice']['rpm_url'] do
 end
 
 execute 'install-openoffice-rpms' do
-  command "yum install -y #{Chef::Config[:file_cache_path]}/openoffice/en-US/RPMS/*.rpm /var/chef/cache/openoffice/en-US/RPMS/desktop-integration/openoffice4.0-redhat-*.rpm'
+  command "yum install -y #{Chef::Config[:file_cache_path]}/openoffice/en-US/RPMS/*.rpm /var/chef/cache/openoffice/en-US/RPMS/desktop-integration/openoffice4.0-redhat-*.rpm"
   not_if 'rpm -q openoffice'
 end
