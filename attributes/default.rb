@@ -1,5 +1,5 @@
 case node['platform_family']
-  when 'rhel'
+  when 'rhel', 'fedora'
     default['openoffice']['install_method'] = 'rpms'
   else
     default['openoffice']['install_method'] = 'package'
