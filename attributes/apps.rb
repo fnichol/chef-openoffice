@@ -27,5 +27,5 @@ when "ubuntu"
       %w{libreoffice-writer libreoffice-calc libreoffice-impress}
   end
 else
-  default['openoffice']['apps_pkgs'] = []
+  default['openoffice']['apps_pkgs'] = %w{libreoffice}
 end
